@@ -1,0 +1,109 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>Edit</title>
+    <meta name="description" content="这是一个blog页面">
+    <meta name="keywords" content="index">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" th:href="@{/admin_assets/i/favicon.png}">
+    <link rel="apple-touch-icon-precomposed" th:href="@{/admin_assets/i/app-icon72x72@2x.png}">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <script th:src="@{/admin_assets/js/echarts.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/admin_assets/css/amazeui.min.css}"/>
+    <link rel="stylesheet" th:href="@{/admin_assets/css/amazeui.datatables.min.css}"/>
+    <link rel="stylesheet" th:href="@{/admin_assets/css/app.css}">
+    <script th:src="@{/admin_assets/js/jquery.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/editor/css/style.css}">
+    <link rel="stylesheet" th:href="@{/editor/css/editormd.css}">
+    <link rel="shortcut icon" href="https://pandao.github.io/editor.md/favicon.ico" type="image/x-icon"/>
+</head>
+<body>
+<button
+        type="button"
+        class="am-btn am-btn-success"
+        id="doc-prompt-toggle">
+    Prompt
+</button>
+
+<div class="am-modal am-modal-prompt" tabindex="-1" id="my-prompt">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">Amaze UI</div>
+        <div class="am-modal-bd">
+            来来来，吐槽点啥吧
+            <input type="text" class="am-modal-prompt-input">
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+            <span class="am-modal-btn" data-am-modal-confirm>提交</span>
+        </div>
+    </div>
+</div>
+<form action="/test" method="post">
+<div class="editormd" id="test-editormd">
+    <textarea class="editormd-markdown-textarea" name="test-editormd-markdown-doc" id="content"  th:text="${mk}">213</textarea>
+    <!-- 第二个隐藏文本域，用来构造生成的HTML代码，方便表单POST提交，这里的name可以任意取，后台接受时以这个name键为准 -->
+    <textarea class="editormd-html-textarea" name="editormd-html-textarea" id="htmlContent"></textarea>
+    </div>
+    <input type="submit" value="提交"/>
+</form>
+
+<button onclick="change()"  class="btn btn-info">点击改变</button>
+</body>
+<script th:src="@{/editor/jquery.min.js}"></script>
+<script th:src="@{/editor/editormd.min.js}"></script>
+<script type="text/javascript">
+    $(function() {
+        $('#doc-prompt-toggle').on('click', function() {
+            $('#my-prompt').modal({
+                relatedTarget: this,
+                onConfirm: function(e) {
+                    alert('你输入的是：' + e.data || '')
+                },
+                onCancel: function(e) {
+                    alert('不想说!');
+                }
+            });
+        });
+    });
+    function change() {
+        /** js设置 */
+  /*      var test = document.getElementById("test");
+        test.innerHTML = "你好，地球！"; //方法1
+        test.value = "你好，中国！"; //方法2
+        test.innerText = "绿色地球！"; //方法3*/
+
+        /** jq设置 */
+        var a = $("#htmlContent").val();
+        alert(a);
+        /*$("#content").text("html好学");*/
+        $("#content").text('<p>我去恶趣味</p>');
+        /*$("#content").html('<p>我去恶趣味</p>');*/
+       /* $("#htmlContent").val("幸福的日子");  //方法2
+        $("#htmlContent").text("html好学");  //方法3*/
+    }
+    $(function() {
+        editormd("test-editormd", {
+            width   : "80%",
+            height  : 640,
+            syncScrolling : "single",
+            emoji:true,
+            //你的lib目录的路径，我这边用JSP做测试的
+            tocm : true, // Using [TOCM]
+            tex : true, // 开启科学公式TeX语言支持，默认关闭
+            flowChart : true, // 开启流程图支持，默认关闭
+            imageUpload : true,
+            imageFormats : [ "jpg", "jpeg", "gif", "png", "bmp", "webp" ],
+            imageUploadURL : "/markdown",
+            path    : "/editor/lib/",
+            //这个配置在simple.html中并没有，但是为了能够提交表单，使用这个配置可以让构造出来的HTML代码直接在第二个隐藏的textarea域中，方便post提交表单。
+            saveHTMLToTextarea : true
+        });
+    });
+</script>
+</html>

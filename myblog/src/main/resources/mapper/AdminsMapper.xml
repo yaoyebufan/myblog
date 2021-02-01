@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sunyue.myblog.dao.AdminsMapper">
+  <resultMap id="BaseResultMap" type="com.sunyue.myblog.entity.Admins">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="admin_id" jdbcType="BIGINT" property="adminId" />
+    <result column="admin_name" jdbcType="VARCHAR" property="adminName" />
+    <result column="admin_password" jdbcType="VARCHAR" property="adminPassword" />
+    <result column="admin_photo" jdbcType="VARCHAR" property="adminPhoto" />
+    <result column="admin_email" jdbcType="VARCHAR" property="adminEmail" />
+    <result column="admin_phone" jdbcType="VARCHAR" property="adminPhone" />
+    <result column="admin_create_time" jdbcType="TIMESTAMP" property="adminCreateTime" />
+    <result column="admin_login_time" jdbcType="TIMESTAMP" property="adminLoginTime" />
+    <result column="admin_status" jdbcType="INTEGER" property="adminStatus" />
+  </resultMap>
+</mapper>

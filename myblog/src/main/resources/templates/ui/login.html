@@ -1,0 +1,65 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>登陆</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="alternate icon" type="image/png" th:href="@{/assets/i/favicon.png}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/amazeui.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/login.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/blog.css}">
+    <!--[if lt IE 9]>
+    <script th:src="@{http://libs.baidu.com/jquery/1.11.1/jquery.min.js}"></script>
+    <script th:src="@{http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js}"></script>
+    <script th:src="@{/assets/js/amazeui.ie8polyfill.min.js}"></script>
+    <![endif]-->
+
+    <!--[if (gte IE 9)|!(IE)]><!-->
+    <script th:src="@{/assets/js/jquery.min.js}"></script>
+    <!--<![endif]-->
+    <script th:src="@{/assets/js/amazeui.min.js}"></script>
+    <script th:src="@{/assets/js/app.js}"></script>
+    <!--右下角动漫人物-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+<body>
+<!-- 头部 -->
+<header th:replace="ui/include/header :: header"></header>
+<div class="con">
+    <div class="am-g">
+        <div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
+            <div class="login col-sm-centered">
+                <h2>用户登录</h2>
+                <input id="messages" type="hidden" th:value="${messages}"  />
+                <form method="post" action="/login">
+                    <input type="email" name="email" th:value="${userEmail}" id="email" class="email" placeholder="邮箱">
+                    <input type="password" name="password" th:value="${userPassword}" id="password" class="pws" placeholder="密码">
+                    <input type="submit" name="" value="登 录" class="denglu">
+                    <a href="/register" class="zhuce">注 册</a>
+                </form>
+                <!--<a href="" class="wjmm">忘记密码？</a>-->
+            </div>
+        </div>
+    </div>
+</div>
+<!--gotop-->
+<div data-am-widget="gotop" class="am-gotop am-gotop-fixed">
+    <a href="#top" title="">
+        <i class="am-gotop-icon am-icon-arrow-up"></i>
+    </a>
+</div>
+<!-- 尾部 -->
+<footer th:replace="ui/include/footer :: footer"></footer>
+</body>
+<script>
+    var messages = $("#messages").val();
+    if (messages!==""){
+        alert(messages);
+    }
+</script>
+</html>

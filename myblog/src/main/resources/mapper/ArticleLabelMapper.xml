@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sunyue.myblog.dao.ArticleLabelMapper">
+  <resultMap id="BaseResultMap" type="com.sunyue.myblog.entity.ArticleLabel">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="article_id" jdbcType="BIGINT" property="articleId" />
+    <id column="label_id" jdbcType="BIGINT" property="labelId" />
+  </resultMap>
+</mapper>

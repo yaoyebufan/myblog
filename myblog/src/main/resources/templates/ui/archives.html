@@ -1,0 +1,116 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>归档</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="alternate icon" type="image/png" th:href="@{/assets/i/favicon.png}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/amazeui.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/blog.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/categories.css}">
+    <!--[if lt IE 9]>
+    <script th:src="@{http://libs.baidu.com/jquery/1.11.1/jquery.min.js}"></script>
+    <script th:src="@{http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js}"></script>
+    <script th:src="@{/assets/js/amazeui.ie8polyfill.min.js}"></script>
+    <![endif]-->
+    <!--[if (gte IE 9)|!(IE)]><!-->
+    <script th:src="@{/assets/js/jquery.min.js}"></script>
+    <!--<![endif]-->
+    <script th:src="@{/assets/js/amazeui.min.js}"></script>
+    <script th:src="@{/assets/js/app.js}"></script>
+    <!--右下角动漫人物-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+
+</head>
+<body>
+<!-- 头部 -->
+<header th:replace="ui/include/header :: header"></header>
+<div class="am-container">
+    <div class="am-g">
+        <div class="categories-left am-u-md-3 am-u-md-pull-9 am-u-lg-reset-order">
+            <span><a href="/archive">Archives</a></span>
+            <ul data-am-scrollspy="{animation: 'fade', delay: 300}" th:each="date : ${dateList}">
+                <li><a th:href="@{'/archive?dateTime='+${date}}">[[${date}]]</a></li>
+            </ul>
+        </div>
+        <div class="am-u-md-9 am-u-md-push-3 am-u-lg-reset-order">
+            <div class="categories-right">
+                <i class="am-icon-calendar file"></i>
+                <span># 很好! 目前总计[[${articleCount}]]篇文章，继续努力。</span>
+                <div th:if="${articlesPageInfo.getList().size()==0}" class="am-u-sm-12">
+                    <p style="margin-top: 5px">表中无数据</p>
+                </div>
+                <div th:each="article : ${articlesPageInfo.getList()}">
+                    <div class="categories-right-con" data-am-scrollspy="{animation: 'scale-down', delay: 600}">
+                        <div class="article">
+                            <h3><a th:href="@{'/article?articleId='+${article.articleId}}">[[${article.articleTitle}]]</a></h3>
+                            <hr data-am-widget="divider" style="" class="am-divider am-divider-default"/>
+                            <small>
+                                <i class="am-icon-calendar"> </i>
+                                <span th:text="${#dates.format(article.articleCreateTime, 'yyyy-MM-dd')}"></span>
+                            </small>
+                            <small th:each="admin : ${adminsList}" th:if="${admin.adminId==article.userId}"><i class="am-icon-user"></i> [[${admin.adminName}]]</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--gotop-->
+    <div data-am-widget="gotop" class="am-gotop am-gotop-fixed">
+        <a href="#top" title="">
+            <i class="am-gotop-icon am-icon-arrow-up"></i>
+        </a>
+    </div>
+    <!--分页-->
+    <div th:style="'display:' + @{(${articlesPageInfo.getList().size()==0} ? 'none')} + ''">
+    <div th:if="${dateTime==''}" th:style="'display:' + @{(${articlesPageInfo.getList()==null} ? 'none')} + ''" class="am-u-lg-12">
+        <ul class="am-pagination am-pagination-centered">
+            <li th:if="${articlesPageInfo.pageNum!=1}">
+                <a th:href="@{'/archive?pageNum=' + 1}">首页</a>
+            </li>
+            <li th:if="${articlesPageInfo.hasPreviousPage==true}">
+                <a th:href="@{'/archive?pageNum='+${articlesPageInfo.pageNum-1}}">«</a>
+            </li>
+            <li th:if="${index.size()!=1}" th:each="i : ${index}" th:class="${articlesPageInfo.pageNum==i}? 'am-active'">
+                <a  th:text="${i}" th:href="@{'/archive?pageNum='+${i}}"></a>
+            </li>
+            <li th:if="${articlesPageInfo.hasNextPage==true}">
+                <a th:href="@{'/archive?pageNum='+${articlesPageInfo.pageNum+1}}">»</a>
+            </li>
+            <li th:if="${articlesPageInfo.pageNum!=articlesPageInfo.pages}">
+                <a th:href="@{'/archive?pageNum='+${articlesPageInfo.pages}}">末页</a>
+            </li>
+        </ul>
+    </div>
+    <div th:if="${dateTime!=''}"  th:style="'display:' + @{(${articlesPageInfo.getList()==null} ? 'none')} + ''" class="am-u-lg-12">
+        <ul class="am-pagination am-pagination-centered">
+            <li th:if="${articlesPageInfo.pageNum!=1}">
+                <a th:href="@{'/archive?dateTime='+${dateTime}+'&pageNum=' + 1}">首页</a>
+            </li>
+            <li th:if="${articlesPageInfo.hasPreviousPage==true}">
+                <a th:href="@{'/archive?dateTime='+${dateTime}+'&pageNum='+${articlesPageInfo.pageNum-1}}">«</a>
+            </li>
+            <li th:if="${index.size()!=1}"  th:each="i : ${index}" th:class="${articlesPageInfo.pageNum==i}? 'am-active'">
+                <a  th:text="${i}" th:href="@{'/archive?dateTime='+${dateTime}+'&pageNum='+${i}}"></a>
+            </li>
+            <li th:if="${articlesPageInfo.hasNextPage==true}">
+                <a th:href="@{'/archive?dateTime='+${dateTime}+'&pageNum='+${articlesPageInfo.pageNum+1}}">»</a>
+            </li>
+            <li th:if="${articlesPageInfo.pageNum!=articlesPageInfo.pages}">
+                <a th:href="@{'/archive?dateTime='+${dateTime}+'&pageNum='+${articlesPageInfo.pages}}">末页</a>
+            </li>
+        </ul>
+    </div>
+</div>
+</div>
+<!-- 尾部 -->
+<footer th:replace="ui/include/footer :: footer"></footer>
+</body>
+</html>

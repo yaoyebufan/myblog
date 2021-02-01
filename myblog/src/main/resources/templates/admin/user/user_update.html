@@ -1,0 +1,246 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>博客管理</title>
+    <meta name="description" content="这是一个blog页面">
+    <meta name="keywords" content="index">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" th:href="@{/admin_assets/i/favicon.png}">
+    <link rel="apple-touch-icon-precomposed" th:href="@{/admin_assets/i/app-icon72x72@2x.png}">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <script th:src="@{/admin_assets/js/echarts.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/admin_assets/css/amazeui.min.css}"/>
+    <link rel="stylesheet" th:href="@{/admin_assets/css/amazeui.datatables.min.css}"/>
+    <link rel="stylesheet" th:href="@{/admin_assets/css/app.css}">
+    <script th:src="@{/admin_assets/js/jquery.min.js}"></script>
+</head>
+
+<body data-type="index">
+<script th:src="@{/admin_assets/js/theme.js}"></script>
+<div class="am-g tpl-g">
+    <!-- 头部 -->
+    <header th:replace="admin/include/header :: header"></header>
+    <!-- 风格切换 -->
+    <div th:replace="admin/include/tpl-skiner :: tpl-skiner"></div>
+    <!-- 侧边导航栏 -->
+    <div th:replace="admin/include/left :: left"></div>
+    <!-- 内容区域 id="tpl-echarts"-->
+    <div class="tpl-content-wrapper">
+        <div class="row-content am-cf">
+            <div class="row am-cf">
+                <!--为了让折叠按钮生效-->
+                <div id="tpl-echarts"></div>
+
+                <div class="row">
+
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                        <div class="widget am-cf">
+                            <div class="widget-head am-cf">
+                                <div class="widget-title am-fl">修改用户信息</div>
+                                <div class="widget-function am-fr">
+                                    <a href="javascript:;" class="am-icon-cog"></a>
+                                </div>
+                            </div>
+                            <div class="widget-body am-fr">
+                                <div th:style="${messages==null}?'display:none'" class="am-alert am-alert-warning"
+                                     data-am-alert>
+                                    <button type="button" class="am-close">&times;</button>
+                                    <p th:text="${messages}"></p>
+                                </div>
+                                <form class="am-form tpl-form-border-form" action="/admin/userUpdate" method="post">
+                                    <div class="am-form-group">
+                                        <label for="userId" class="am-u-sm-12 am-form-label am-text-left">用户ID <span
+                                                class="tpl-form-line-small-title">Id</span></label>
+                                        <div class="am-u-sm-12">
+                                            <input th:value="${user.userId}" type="text" name="userId"
+                                                   class="tpl-form-input am-margin-top-xs"
+                                                   id="userId" placeholder="请输入用户Id" readonly="readonly">
+                                            <small>用户Id为必填</small>
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group">
+                                        <label for="userName" class="am-u-sm-12 am-form-label am-text-left">用户名字 <span
+                                                class="tpl-form-line-small-title">Name</span></label>
+                                        <div class="am-u-sm-12">
+                                            <input th:value="${user.userName}" type="text" name="userName"
+                                                   class="tpl-form-input am-margin-top-xs"
+                                                   id="userName" placeholder="请输入用户名字">
+                                            <small>用户名字为必填</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="am-form-group">
+                                        <label for="userNickname" class="am-u-sm-12 am-form-label am-text-left">用户昵称 <span
+                                                class="tpl-form-line-small-title">userNickname</span></label>
+                                        <div class="am-u-sm-12">
+                                            <input type="text" name="userNickname" class="tpl-form-input am-margin-top-xs"
+                                                   id="userNickname" th:value="${user.userNickname}" placeholder="请输入用户昵称">
+                                            <small>用户昵称为非必填</small>
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group">
+                                        <label for="userAge" class="am-u-sm-12 am-form-label am-text-left">用户年龄 <span
+                                                class="tpl-form-line-small-title">userAge</span></label>
+                                        <div class="am-u-sm-12">
+                                            <input type="text" name="userAge" class="tpl-form-input am-margin-top-xs"
+                                                   id="userAge" th:value="${user.userAge}" placeholder="请输入用户年龄">
+                                            <small>用户年龄为必填</small>
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group">
+                                        <label for="userSex" class="am-u-sm-12 am-form-label am-text-left">用户性别 <span
+                                                class="tpl-form-line-small-title">userSex</span></label>
+                                        <div class="am-u-sm-12">
+                                            <input type="text" name="userSex" class="tpl-form-input am-margin-top-xs"
+                                                   id="userSex" th:value="${user.userSex}" placeholder="请输入用户性别">
+                                            <small>用户性别为必填</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="am-form-group">
+                                        <label for="userPassword" class="am-u-sm-12 am-form-label am-text-left">用户密码
+                                            <span class="tpl-form-line-small-title">Password</span></label>
+                                        <div class="am-u-sm-12">
+                                            <input id="userPassword" type="password" th:value="${user.userPassword}"
+                                                   class="tpl-form-input am-margin-top-xs" name="userPassword"
+                                                   placeholder="请输入用户密码">
+                                            <small>用户密码为必填</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="am-form-group">
+                                        <label for="userEmail" class="am-u-sm-12 am-form-label am-text-left">用户邮箱账号
+                                            <span class="tpl-form-line-small-title">Email</span></label>
+                                        <div class="am-u-sm-12">
+                                            <input th:value="${user.userEmail}" id="userEmail" type="email"
+                                                   class="tpl-form-input am-margin-top-xs"
+                                                   name="userEmail" placeholder="请输入用户邮箱账号">
+                                            <small>用户邮箱账号为必填</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="am-form-group">
+                                        <label for="userPhone" class="am-u-sm-12 am-form-label am-text-left">用户手机号码
+                                            <span class="tpl-form-line-small-title">Phone</span></label>
+                                        <div class="am-u-sm-12">
+                                            <input th:value="${user.userPhone}" type="text" name="userPhone"
+                                                   class="tpl-form-input am-margin-top-xs"
+                                                   id="userPhone" placeholder="请输入用户手机号码">
+                                            <small>用户手机号码为必填</small>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="am-form-group">
+                                        <label for="userPhoto" class="am-u-sm-12 am-form-label  am-text-left">用户头像
+                                            <span class="tpl-form-line-small-title">Images</span></label>
+                                        <div class="am-u-sm-12 am-margin-top-xs">
+                                            <input type="file" id="file" name="file" style="color: #ff5b67">
+                                            <input style="margin: 10px 0"  type="button" id="upload" value="更改" class="am-btn-secondary">
+                                            <input style="margin: 10px 2px" type="button" id="cancel" value="取消"class="am-btn-danger">
+                                            <div class="am-form-group am-form-file">
+                                                <input type="text" id="userPhoto" name="userPhoto"
+                                                       th:value="${user.userPhoto}"
+                                                       class="tpl-form-input am-margin-top-xs" placeholder="图片地址"
+                                                       readonly="readonly">
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="am-form-group">
+                                        <label for="status"
+                                               class="am-u-sm-12 am-form-label  am-text-left">启用用户账号</label>
+                                        <div class="am-u-sm-12">
+                                            <div class="tpl-switch">
+                                                <input id="status" name="status" type="checkbox"
+                                                       class="ios-switch bigswitch tpl-switch-btn am-margin-top-xs"
+                                                       th:checked="${user.userStatus==1}? 'checked'">
+                                                <div class="tpl-switch-btn-view">
+                                                    <div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="am-form-group">
+                                        <div class="am-u-sm-12 am-u-sm-push-12">
+                                            <button type="submit"
+                                                    class="am-btn am-btn-primary tpl-btn-bg-color-success ">提交
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:replace="admin/include/foot :: footer"></footer>
+</body>
+<script type="text/javascript">
+    $(function () {
+        $("#upload").click(function () {
+            var form = new FormData();
+            var params = $("#userPhoto").val();
+            form.append("file", document.getElementById("file").files[0]);
+            form.append("params",params);
+            $.ajax({
+                url: "/fileUpdate",        //后台url
+                data: form,
+                cache: false,
+                async: false,
+                type: "POST",                   //类型，POST或者GET
+                dataType: "json",              //数据返回类型，可以是xml、json等
+                processData: false,
+                contentType: false,
+                enctype: 'multipart/form-data',
+                success: function (data) {      //成功，回调函数
+                    if (data.success == 1) {
+                        $("#url img").attr("src", data.url);
+                        $("#userPhoto").val(data.url);
+                        $("#url1").html(data.url);
+                        alert("图片更改成功！")
+
+                    } else {
+                        alert(data.message);
+                        alert("上传失败");
+                    }
+
+                },
+                error: function (er) {
+                    alert(er);//失败，回调函数
+                }
+            });
+        });
+        $("#cancel").click(function () {
+            var params = $("#userPhoto").val();
+            $.ajax({
+                url: "/fileDelete/?params=" + params,
+                type: "POST",
+                contentType: "application/json",//一定要加的属性
+                dataType: "json",
+                success: function (data) {
+                    //data是服务器返回的数据
+                    if (data.success == 1) {
+                        $("#userPhoto").val("");
+                    }
+                    alert(data.message);
+                },
+                error: function (e) {
+                    alert(e);//异常信息
+                }
+            });
+        });
+    });
+
+</script>
+</html>

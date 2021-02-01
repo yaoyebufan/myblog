@@ -1,0 +1,133 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>博客管理</title>
+    <meta name="description" content="这是一个blog页面">
+    <meta name="keywords" content="index">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" th:href="@{/admin_assets/i/favicon.png}">
+    <link rel="apple-touch-icon-precomposed" th:href="@{/admin_assets/i/app-icon72x72@2x.png}">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <script th:src="@{/admin_assets/js/echarts.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/admin_assets/css/amazeui.min.css}"/>
+    <link rel="stylesheet" th:href="@{/admin_assets/css/amazeui.datatables.min.css}"/>
+    <link rel="stylesheet" th:href="@{/admin_assets/css/app.css}">
+    <script th:src="@{/admin_assets/js/jquery.min.js}"></script>
+</head>
+
+<body data-type="index">
+<script th:src="@{/admin_assets/js/theme.js}"></script>
+<div class="am-g tpl-g">
+    <!-- 头部 -->
+    <header th:replace="admin/include/header :: header"></header>
+    <!-- 风格切换 -->
+    <div th:replace="admin/include/tpl-skiner :: tpl-skiner"></div>
+    <!-- 侧边导航栏 -->
+    <div th:replace="admin/include/left :: left"></div>
+    <!-- 内容区域 id="tpl-echarts"-->
+    <div class="tpl-content-wrapper">
+        <div class="row-content am-cf">
+            <div class="row am-cf">
+                <!--为了让折叠按钮生效-->
+                <div id="tpl-echarts"></div>
+                <div class="row">
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                        <div class="widget am-cf">
+                            <div class="widget-head am-cf">
+                                <div class="widget-title am-fl">添加评论信息</div>
+                                <div class="widget-function am-fr">
+                                    <a href="javascript:;" class="am-icon-cog"></a>
+                                </div>
+                            </div>
+                            <div class="widget-body am-fr">
+
+                                <form class="am-form tpl-form-border-form" action="/admin/commentAdd" method="post">
+                                    <div th:style="${messages==null}?'display:none'" class="am-alert am-alert-warning"
+                                         data-am-alert>
+                                        <button type="button" class="am-close">&times;</button>
+                                        <p th:text="${messages}"></p>
+                                    </div>
+                                    <div class="am-form-group">
+                                        <label for="articleId" class="am-u-sm-12 am-form-label am-text-left">评论文章ID
+                                            <span
+                                                    class="tpl-form-line-small-title">articleId</span></label>
+                                        <div class="am-u-sm-12">
+                                            <input type="text" name="articleId" class="tpl-form-input am-margin-top-xs"
+                                                   id="articleId" th:value="${comment.articleId}"
+                                                   placeholder="请输入评论文章ID">
+                                            <small>评论文章ID为必填</small>
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group">
+                                        <label for="userId" class="am-u-sm-12 am-form-label am-text-left">用户ID <span
+                                                class="tpl-form-line-small-title">userId</span></label>
+                                        <div class="am-u-sm-12">
+                                            <input type="text" name="userId" class="tpl-form-input am-margin-top-xs"
+                                                   id="userId" th:value="${comment.userId}" placeholder="请输入用户ID">
+                                            <small>用户ID为必填</small>
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group">
+                                        <label for="commentContent" class="am-u-sm-12 am-form-label am-text-left">评论信息名称
+                                            <span
+                                                    class="tpl-form-line-small-title">commentContent</span></label>
+                                        <div class="am-u-sm-12">
+                                            <input type="text" name="commentContent"
+                                                   class="tpl-form-input am-margin-top-xs"
+                                                   id="commentContent" th:value="${comment.commentContent}"
+                                                   placeholder="请输入评论信息">
+                                            <small>评论信息为必填</small>
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group">
+                                        <label for="commentLikes" class="am-u-sm-12 am-form-label am-text-left">评论点赞数
+                                            <span
+                                                    class="tpl-form-line-small-title">commentLikes</span></label>
+                                        <div class="am-u-sm-12">
+                                            <input type="text" name="commentLikes"
+                                                   class="tpl-form-input am-margin-top-xs"
+                                                   id="commentLikes" th:value="${comment.commentLikes}"
+                                                   placeholder="请输入评论点赞数">
+                                            <small>评论点赞数为必填</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="am-form-group">
+                                        <label for="status"
+                                               class="am-u-sm-12 am-form-label  am-text-left">启用评论信息</label>
+                                        <div class="am-u-sm-12">
+                                            <div class="tpl-switch">
+                                                <input id="status" name="status" type="checkbox"
+                                                       class="ios-switch bigswitch tpl-switch-btn am-margin-top-xs"
+                                                       th:checked="${comment.commentStatus==1}? 'checked'">
+                                                <div class="tpl-switch-btn-view">
+                                                    <div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="am-form-group">
+                                        <div class="am-u-sm-12 am-u-sm-push-12">
+                                            <button type="submit"
+                                                    class="am-btn am-btn-primary tpl-btn-bg-color-success ">提交
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:replace="admin/include/foot :: footer"></footer>
+</body>
+</html>

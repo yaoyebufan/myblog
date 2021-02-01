@@ -1,0 +1,61 @@
+
+@media screen and (min-width: 768px) {
+    .lable{
+        margin: 30px 16% 0;
+    }
+}
+@media screen and (max-width: 768px) {
+    .lable{
+        margin: 30px 7% 0;
+    }
+}
+.about{
+    font-size: 30px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+/* 清除ul默认样式 */
+.cloud {
+    padding: 0;
+    /* text-align: center;*/
+    display: inline;
+    list-style-type: none;
+}
+
+.cloud li {
+    list-style: none;
+    display: inline;
+}
+
+.cloud li a {
+    color: rgba(132, 126, 132, 0.82);
+}
+
+.cloud a:hover { /*悬浮状态*/
+    color: #ff639a;
+}
+
+.cloud a:active { /*激活过的*/
+    color: red;
+}
+
+/* 清除ul默认样式 */
+.cloud li:nth-of-type(3n + 1) {
+    font-size: 1.25em;
+}
+
+.cloud li:nth-of-type(4n+3) {
+    font-size: 1.5em;
+}
+
+.cloud li:nth-of-type(5n - 3) {
+    font-size: 1em;
+}
+
+
+/*页脚*/
+.blog-footer {
+    padding: 10px 0;
+    text-align: center;
+}

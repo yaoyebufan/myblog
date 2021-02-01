@@ -1,0 +1,165 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="left" class="left-sidebar">
+    <!-- 用户信息 -->
+<!--    <div class="tpl-sidebar-user-panel">
+        <div class="tpl-user-panel-slide-toggleable">
+            <div class="tpl-user-panel-profile-picture">
+                <img th:src="@{${session.admin.adminPhoto}}" alt="">
+            </div>
+            &lt;!&ndash;暂时不考虑添加此功能&ndash;&gt;
+           &lt;!&ndash; <a href="javascript:;" class="tpl-user-panel-action-link"> <span class="am-icon-pencil"></span> 账号设置</a>&ndash;&gt;
+        </div>
+    </div>-->
+
+    <!-- 菜单 -->
+    <ul class="sidebar-nav">
+        <li class="sidebar-nav-heading">Menu <span class="sidebar-nav-heading-info"> 菜单</span></li>
+        <li class="sidebar-nav-link">
+            <a href="/admin" >
+                <i class="am-icon-home sidebar-nav-link-logo"></i> 首页
+            </a>
+        </li>
+
+        <li class="sidebar-nav-link">
+            <a href="javascript:;" class="sidebar-nav-sub-title">
+                <i class="am-icon-table sidebar-nav-link-logo"></i> 管理员管理
+                <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+            </a>
+            <ul class="sidebar-nav sidebar-nav-sub">
+                <li class="sidebar-nav-link">
+                    <a href="/admin/adminList">
+                        <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 管理员列表
+                    </a>
+                </li>
+                <li class="sidebar-nav-link">
+                    <a href="/admin/adminAdd">
+                        <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 添加管理员
+                    </a>
+                </li>
+            </ul>
+
+        </li>
+
+        <li class="sidebar-nav-link">
+            <a href="javascript:;" class="sidebar-nav-sub-title">
+                <i class="am-icon-table sidebar-nav-link-logo"></i> 用户管理
+                <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+            </a>
+            <ul class="sidebar-nav sidebar-nav-sub">
+                <li class="sidebar-nav-link">
+                    <a href="/admin/userList">
+                        <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 用户列表
+                    </a>
+                </li>
+                <li class="sidebar-nav-link">
+                    <a href="/admin/userAdd">
+                        <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 添加用户
+                    </a>
+                </li>
+            </ul>
+
+        </li>
+
+        <li class="sidebar-nav-link">
+            <a href="javascript:;" class="sidebar-nav-sub-title">
+                <i class="am-icon-table sidebar-nav-link-logo"></i> 博文管理
+                <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+            </a>
+            <ul class="sidebar-nav sidebar-nav-sub">
+                <li class="sidebar-nav-link">
+                    <a href="/admin/articleList">
+                        <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 博文列表
+                    </a>
+                </li>
+                <li class="sidebar-nav-link">
+                    <a href="/admin/articleAdd">
+                        <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 添加博文
+                    </a>
+                </li>
+            </ul>
+
+        </li>
+
+        <li class="sidebar-nav-link">
+            <a href="javascript:;" class="sidebar-nav-sub-title">
+                <i class="am-icon-table sidebar-nav-link-logo"></i> 博文分类管理
+                <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+            </a>
+            <ul class="sidebar-nav sidebar-nav-sub">
+                <li class="sidebar-nav-link">
+                    <a href="/admin/sortList">
+                        <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 博文分类列表
+                    </a>
+                </li>
+                <li class="sidebar-nav-link">
+                    <a href="/admin/sortAdd">
+                        <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 添加博文分类
+                    </a>
+                </li>
+            </ul>
+
+        </li>
+
+        <li class="sidebar-nav-link">
+            <a href="javascript:;" class="sidebar-nav-sub-title">
+                <i class="am-icon-table sidebar-nav-link-logo"></i> 博文标签管理
+                <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+            </a>
+            <ul class="sidebar-nav sidebar-nav-sub">
+                <li class="sidebar-nav-link">
+                    <a href="/admin/labelList">
+                        <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 博文标签列表
+                    </a>
+                </li>
+                <li class="sidebar-nav-link">
+                    <a href="/admin/labelAdd">
+                        <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 添加博文标签
+                    </a>
+                </li>
+            </ul>
+
+        </li>
+
+        <li class="sidebar-nav-link">
+            <a href="javascript:;" class="sidebar-nav-sub-title">
+                <i class="am-icon-table sidebar-nav-link-logo"></i> 博文评论管理
+                <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+            </a>
+            <ul class="sidebar-nav sidebar-nav-sub">
+                <li class="sidebar-nav-link">
+                    <a href="/admin/commentList">
+                        <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 博文评论列表
+                    </a>
+                </li>
+                <li class="sidebar-nav-link">
+                    <a href="/admin/commentAdd">
+                        <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 添加博文评论
+                    </a>
+                </li>
+            </ul>
+
+        </li>
+
+        <li class="sidebar-nav-link">
+            <a href="javascript:;" class="sidebar-nav-sub-title">
+                <i class="am-icon-table sidebar-nav-link-logo"></i> 留言管理
+                <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+            </a>
+            <ul class="sidebar-nav sidebar-nav-sub">
+                <li class="sidebar-nav-link">
+                    <a href="/admin/messageList">
+                        <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 留言列表
+                    </a>
+                </li>
+                <li class="sidebar-nav-link">
+                    <a href="/admin/messageAdd">
+                        <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 添加留言
+                    </a>
+                </li>
+            </ul>
+
+        </li>
+    </ul>
+</div>
+</html>

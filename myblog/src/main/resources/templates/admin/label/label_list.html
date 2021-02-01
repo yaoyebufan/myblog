@@ -1,0 +1,281 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>博客管理</title>
+    <meta name="description" content="这是一个blog页面">
+    <meta name="keywords" content="index">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" th:href="@{/admin_assets/i/favicon.png}">
+    <link rel="apple-touch-icon-precomposed" th:href="@{/admin_assets/i/app-icon72x72@2x.png}">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <script th:src="@{/admin_assets/js/echarts.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/admin_assets/css/amazeui.min.css}"/>
+    <link rel="stylesheet" th:href="@{/admin_assets/css/amazeui.datatables.min.css}"/>
+    <link rel="stylesheet" th:href="@{/admin_assets/css/app.css}">
+    <script th:src="@{/admin_assets/js/jquery.min.js}"></script>
+</head>
+
+<body data-type="index">
+<script th:src="@{/admin_assets/js/theme.js}"></script>
+<div class="am-g tpl-g">
+    <!-- 头部 -->
+    <header th:replace="admin/include/header :: header"></header>
+    <!-- 风格切换 -->
+    <div th:replace="admin/include/tpl-skiner :: tpl-skiner"></div>
+    <!-- 侧边导航栏 -->
+    <div th:replace="admin/include/left :: left"></div>
+    <!-- 内容区域 id="tpl-echarts"-->
+    <div class="tpl-content-wrapper">
+        <div class="row-content am-cf">
+            <!--为了让折叠按钮生效-->
+            <div id="tpl-echarts"></div>
+            <div class="row">
+                <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                    <div class="widget am-cf">
+                        <div class="widget-head am-cf">
+                            <div class="widget-title  am-cf">标签列表</div>
+                        </div>
+                        <div th:style="${messages==null}?'display:none'" class="am-alert am-alert-success"
+                             data-am-alert>
+                            <button type="button" class="am-close">&times;</button>
+                            <p th:text="${messages}"></p>
+                        </div>
+                        <div class="widget-body  am-fr">
+                            <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+                                <div class="am-form-group">
+                                    <div class="am-btn-toolbar">
+                                        <div class="am-btn-group am-btn-group-xs">
+                                            <a th:href="@{'/admin/labelAdd'}"
+                                               class="am-btn am-btn-default am-btn-success"><span
+                                                    class="am-icon-plus"></span> 新增
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
+                                <div class="am-form-group tpl-table-list-select">
+                                    <label>
+                                        <select name="flag" data-am-selected="{btnSize: 'sm'}" onchange="select()">
+                                            <option value="2" th:selected="${flag==null}">
+                                                所有标签
+                                            </option>
+                                            <option value="1" th:selected="${flag==1}">
+                                                已启用标签
+                                            </option>
+                                            <option value="0" th:selected="${flag==0}">
+                                                禁用标签
+                                            </option>
+                                        </select>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+                                <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
+                                    <input th:value="${labelName}" id="labelName" name="labelName" type="text"
+                                           class="am-form-field"
+                                           placeholder="标签名称">
+                                    <span class="am-input-group-btn">
+                                       <a onclick="select()"
+                                          class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search"></a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div  th:if="${page.getList()==null}" class="am-u-sm-12">
+                                表中无数据
+                            </div>
+                            <div th:style="'display:' + @{(${page.getList()==null} ? 'none')} + ''" class="am-u-sm-12">
+                                <div class="am-scrollable-horizontal ">
+                                    <table width="100%"  class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+                                        <thead>
+                                        <tr>
+                                            <th>标签ID</th>
+                                            <th>标签名称</th>
+                                            <th>标签别名</th>
+                                            <th>标签状态</th>
+                                            <th>操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="label : ${page.getList()}" class="gradeX">
+                                            <td th:text="${label.labelId}"></td>
+                                            <td th:text="${label.labelName}"></td>
+                                            <td th:text="${label.labelAlias}"></td>
+                                            <td th:text="${label.labelStatus==1}?'启用':'禁用'"></td>
+                                            <td>
+                                                <div class="tpl-table-black-operation">
+                                                    <a th:href="@{'/admin/labelUpdate?labelId='+${label.labelId}}">
+                                                        <i class="am-icon-pencil"></i> 编辑
+                                                    </a>
+                                                    <a th:href="@{'/admin/labelDelete?labelId='+${label.labelId}}"
+                                                       class="tpl-table-black-operation-del" onclick="return del()">
+                                                        <i class="am-icon-trash"></i> 删除
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div th:style="'display:' + @{(${page.getList()==null} ? 'none')} + ''" class="am-u-lg-12 am-cf">
+                                <div class="am-fr">
+                                    <ul class="am-pagination tpl-pagination">
+                                        <li th:if="${page.pageNum!=1}">
+                                            <a onclick="page1()">首页</a>
+                                        </li>
+                                        <li th:if="${page.hasPreviousPage==true}">
+                                            <a onclick="page2()">«</a>
+                                        </li>
+                                        <li th:if="${index.size()!=1}" th:each="i : ${index}" th:class="${page.pageNum==i}? 'am-active'">
+                                            <a th:text="${i}" onclick="page3(this)"></a>
+                                        </li>
+                                        <li th:if="${page.hasNextPage==true}">
+                                            <a onclick="page4()">»</a>
+                                        </li>
+                                        <li th:if="${page.pageNum!=page.pages}">
+                                            <a onclick="page5()">末页</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:replace="admin/include/foot :: footer"></footer>
+</body>
+<script language="javascript" type="text/javascript">
+    function del() {
+        return confirm("确定要删除吗？")?true:false;
+    }
+    function select() {
+        //获取被选中的option标签
+        var flag = $('select  option:selected').val();
+        var labelName = $('#labelName').val();
+
+        if (flag === '2' && labelName === '') {
+            window.location.href = "/admin/labelList";
+        }
+
+        if (flag !== '2' && labelName === '') {
+            window.location.href = "/admin/labelList?flag=" + flag;
+        }
+        if (flag === '2' && labelName !== '') {
+            window.location.href = "/admin/labelList?labelName=" + labelName;
+        }
+
+        if (flag !== '2' && labelName !== '') {
+            window.location.href = "/admin/labelList?labelName=" + labelName + "&flag=" + flag;
+        }
+
+    }
+
+    function page1() {
+        var flag = $('select  option:selected').val();
+        var labelName = $('#labelName').val();
+        if (flag === '2' && labelName === '') {
+            window.location.href = "/admin/labelList?pageNum=" + 1;
+        }
+
+        if (flag !== '2' && labelName === '') {
+            window.location.href = "/admin/labelList?pageNum=" + 1 + "&flag=" + flag;
+        }
+        if (flag === '2' && labelName !== '') {
+            window.location.href = "/admin/labelList?pageNum=" + 1 + "&labelName=" + labelName;
+        }
+
+        if (flag !== '2' && labelName !== '') {
+            window.location.href = "/admin/labelList?pageNum=" + 1 + "&flag=" + flag + "&labelName=" + labelName;
+        }
+
+    }
+
+    function page2() {
+        var flag = $('select  option:selected').val();
+        var labelName = $('#labelName').val();
+        if (flag === '2' && labelName === '') {
+            window.location.href = "/admin/labelList?pageNum=" + [[${page.pageNum-1}]];
+        }
+
+        if (flag !== '2' && labelName === '') {
+            window.location.href = "/admin/labelList?pageNum=" + [[${page.pageNum-1}]] + "&flag=" + flag;
+        }
+        if (flag === '2' && labelName !== '') {
+            window.location.href = "/admin/labelList?pageNum=" + [[${page.pageNum-1}]] + "&labelName=" + labelName;
+        }
+
+        if (flag !== '2' && labelName !== '') {
+            window.location.href = "/admin/labelList?pageNum=" + [[${page.pageNum-1}]] + "&flag=" + flag + "&labelName=" + labelName;
+        }
+    }
+
+    function page3(e) {
+        var flag = $('select  option:selected').val();
+        var labelName = $('#labelName').val();
+        var pageNum = $(e).text();
+        if (flag === '2' && labelName === '') {
+            window.location.href = "/admin/labelList?pageNum=" + pageNum;
+        }
+
+        if (flag !== '2' && labelName === '') {
+            window.location.href = "/admin/labelList?pageNum=" + pageNum + "&flag=" + flag;
+        }
+        if (flag === '2' && labelName !== '') {
+            window.location.href = "/admin/labelList?pageNum=" + pageNum + "&labelName=" + labelName;
+        }
+
+        if (flag !== '2' && labelName !== '') {
+            window.location.href = "/admin/labelList?pageNum=" + pageNum + "&flag=" + flag + "&labelName=" + labelName;
+        }
+
+    }
+
+    function page4() {
+        var flag = $('select  option:selected').val();
+        var labelName = $('#labelName').val();
+        if (flag === '2' && labelName === '') {
+            window.location.href = "/admin/labelList?pageNum=" + [[${page.pageNum+1}]];
+        }
+
+        if (flag !== '2' && labelName === '') {
+            window.location.href = "/admin/labelList?pageNum=" + [[${page.pageNum+1}]] + "&flag=" + flag;
+        }
+        if (flag === '2' && labelName !== '') {
+            window.location.href = "/admin/adminList?pageNum=" + [[${page.pageNum+1}]] + "&labelName=" + labelName;
+        }
+
+        if (flag !== '2' && labelName !== '') {
+            window.location.href = "/admin/labelList?pageNum=" + [[${page.pageNum+1}]] + "&flag=" + flag + "&labelName=" + labelName;
+        }
+    }
+
+    function page5() {
+        var flag = $('select  option:selected').val();
+        var labelName = $('#labelName').val();
+        if (flag === '2' && labelName === '') {
+            window.location.href = "/admin/labelList?pageNum=" + [[${page.pages}]];
+        }
+
+        if (flag !== '2' && labelName === '') {
+            window.location.href = "/admin/labelList?pageNum=" + [[${page.pages}]] + "&flag=" + flag;
+        }
+        if (flag === '2' && labelName !== '') {
+            window.location.href = "/admin/adminList?pageNum=" + [[${page.pages}]] + "&labelName=" + labelName;
+        }
+
+        if (flag !== '2' && labelName !== '') {
+            window.location.href = "/admin/labelList?pageNum=" + [[${page.pages}]] + "&flag=" + flag + "&labelName=" + labelName;
+        }
+    }
+
+</script>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>博客管理</title>
+    <script th:src="@{/admin_assets/js/echarts.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/admin_assets/css/amazeui.min.css}"/>
+    <link rel="stylesheet" th:href="@{/admin_assets/css/amazeui.datatables.min.css}"/>
+    <link rel="stylesheet" th:href="@{/admin_assets/css/app.css}">
+    <script th:src="@{/admin_assets/js/jquery.min.js}"></script>
+</head>
+<body>
+<!--<form action="http://localhost:8080/fileup" enctype="multipart/form-data" method="post">-->
+<!--<input type="file" id="file" name="file">-->
+<!--<input type="submit" id="butto" value="上传">-->
+<!-- </form>-->
+<p>JSON</p>
+<input type="file" id="file" name="file">
+<input type="button" id="button" value="上传" >
+<p id="url"><img src="" width=200></p>
+返回的url为：<p id="url1"></p>
+</body>
+<script type="text/javascript">
+    $(function () {
+        $("#button").click(function () {
+            var form = new FormData();
+            form.append("file", document.getElementById("file").files[0]);
+            $.ajax({
+                url: "/fileup",        //后台url
+                data: form,
+                cache: false,
+                async: false,
+                type: "POST",                   //类型，POST或者GET
+                dataType: "json",              //数据返回类型，可以是xml、json等
+                processData: false,
+                contentType: false,
+                enctype:'multipart/form-data',
+                success: function (data) {      //成功，回调函数
+                    if (data.result == 1) {
+                        $("#url img").attr("src", data.url);
+                        $("#url1").html(data.url);
+                        alert("成功！")
+
+                    } else {
+                        alert("失败");
+                    }
+
+                },
+                error: function (er) {
+                    alert(er);//失败，回调函数
+                }
+            });
+
+        })
+
+    })
+
+</script>
+</html>

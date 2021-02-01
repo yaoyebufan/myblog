@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sunyue.myblog.dao.CommentsMapper">
+  <resultMap id="BaseResultMap" type="com.sunyue.myblog.entity.Comments">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="comment_id" jdbcType="BIGINT" property="commentId" />
+    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="article_id" jdbcType="BIGINT" property="articleId" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="comment_likes" jdbcType="BIGINT" property="commentLikes" />
+    <result column="comment_create_time" jdbcType="TIMESTAMP" property="commentCreateTime" />
+    <result column="comment_status" jdbcType="INTEGER" property="commentStatus" />
+    <result column="comment_content" jdbcType="LONGVARCHAR" property="commentContent" />
+  </resultMap>
+</mapper>

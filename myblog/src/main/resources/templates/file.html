@@ -1,0 +1,64 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>博客管理</title>
+    <meta name="description" content="这是一个blog页面">
+    <meta name="keywords" content="index">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" th:href="@{/admin_assets/i/favicon.png}">
+    <link rel="apple-touch-icon-precomposed" th:href="@{/admin_assets/i/app-icon72x72@2x.png}">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <script th:src="@{/admin_assets/js/echarts.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/admin_assets/css/amazeui.min.css}"/>
+    <link rel="stylesheet" th:href="@{/admin_assets/css/amazeui.datatables.min.css}"/>
+    <link rel="stylesheet" th:href="@{/admin_assets/css/app.css}">
+    <script th:src="@{/admin_assets/js/jquery.min.js}"></script>
+</head>
+<body>
+<!--<form action="/fileUpload" method="post" enctype="multipart/form-data">
+    <label>上传图片</label>
+    <input type="file" name="file"/>
+    <input type="submit" value="上传"/>
+</form>
+<p>图片:</p>
+<img th:src="${filename }"/>-->
+<input type="file" name="file" id="file">
+
+<p id="url"><img th:src="@{/upload/f26d6fcf-6b7f-45fc-8cb5-9f44a4308762.jpg}" width=200></p>
+<input type="button" id="button" value="上传">
+<footer th:replace="admin/include/foot :: footer"></footer>
+<script language="javascript" type="text/javascript">
+    $(function () {
+        $("#button").click(function () {
+            var form = new FormData();
+            form.append("file", document.getElementById("file").files[0]);
+            $.ajax({
+                url: "/fileUpload", //后台url
+                data: form,
+                cache: false,
+                async: false,
+                type: "POST", //类型，POST或者GET
+                dataType: 'json', //数据返回类型，可以是xml、json等
+                processData: false,
+                contentType: false,
+                success: function (data) { //成功，回调函数
+                    if (data) {
+                        var pic =  data.fileName;
+                        $("#url img").attr("src", pic);
+                    } else {
+                        alert("失败");
+                    }
+                },
+                error: function (er) { //失败，回调函数
+                    alert(JSON.stringify(data));
+                }
+            });
+        })
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>留言</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="alternate icon" type="image/png" th:href="@{/assets/i/favicon.png}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/amazeui.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/blog.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/message.css}">
+    <!--开启代码高亮-->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/dark.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+    <!--[if lt IE 9]>
+    <script th:src="@{http://libs.baidu.com/jquery/1.11.1/jquery.min.js}"></script>
+    <script th:src="@{http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js}"></script>
+    <script th:src="@{/assets/js/amazeui.ie8polyfill.min.js}"></script>
+    <![endif]-->
+
+    <!--[if (gte IE 9)|!(IE)]><!-->
+    <script th:src="@{/assets/js/jquery.min.js}"></script>
+    <!--<![endif]-->
+    <script th:src="@{/assets/js/amazeui.min.js}"></script>
+    <script th:src="@{/assets/js/app.js}"></script>
+    <!--右下角动漫人物-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+<body>
+
+<!-- 头部 -->
+<header th:replace="ui/include/header :: header"></header>
+<div class="am-container">
+    <input id="messages" type="hidden" th:value="${messages}"  />
+    <div class="tishi">欢迎大家给出宝贵建议,也可以通过微信QQ联系本人.</div>
+    <form action="/message" method="post" th:if="${session.user!=null}">
+        <input type="text" name="mes" class="message"/>
+        <input style="margin-top: 10px" type="submit" class="article-comment-submit am-align-right am-btn am-btn-success am-round" value="发表留言"/>
+    </form>
+    <div th:if="${session.user==null}">
+        <div  class="message am-kai">
+            <span><a href="/login">登录</a>后才可以发表评论呦...</span>
+        </div>
+    </div>
+
+    <div class="message-list">
+        <ul class="am-comments-list am-comments-list-flip" th:each="message,loopStatus : ${messagesList}">
+            <li th:each="user : ${usersList}"  th:if="${loopStatus.odd==true&&message.userId==user.userId}" class="am-comment am-comment-primary"><a href="#link-to-user-home"><img
+                    th:src="${user.userPhoto}" alt=""
+                    class="am-comment-avatar" width="48" height="48"></a>
+                <div class="am-comment-main">
+                    <header class="am-comment-hd">
+                        <div class="am-comment-meta"><a th:each="user : ${usersList}"
+                                                        th:if="${user.userId==message.userId}" href="#link-to-user"
+                                                        class="am-comment-author">[[${user.userName}]]</a> 评论于
+                            <time datetime="2013-07-27T04:54:29-07:00" title="2013年7月27日 下午7:54 格林尼治标准时间+0800"
+                                  th:text="${#dates.format(message.messageCreateTime, 'yyyy-MM-dd')}">
+                            </time>
+                        </div>
+                    </header>
+                    <div class="am-comment-bd"><p>[[${message.messageContent}]]</p></div>
+                </div>
+            </li>
+            <li th:each="user : ${usersList}" th:if="${loopStatus.even==true&&message.userId==user.userId}"  class="am-comment am-comment-flip am-comment-secondary"><a href="#link-to-user-home"><img
+                    th:src="${user.userPhoto}" alt=""
+                    class="am-comment-avatar" width="48" height="48"></a>
+                <div class="am-comment-main">
+                    <header class="am-comment-hd">
+                        <div class="am-comment-meta"><a th:each="user : ${usersList}"
+                                                        th:if="${user.userId==message.userId}" href="#link-to-user"
+                                                        class="am-comment-author">[[${user.userName}]]</a> 评论于
+                            <time datetime="2013-07-27T04:54:29-07:00" title="2013年7月27日 下午7:54 格林尼治标准时间+0800"
+                                  th:text="${#dates.format(message.messageCreateTime, 'yyyy-MM-dd')}">
+                            </time>
+                        </div>
+                    </header>
+                    <div class="am-comment-bd"><p>[[${message.messageContent}]]</p></div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <!--分页-->
+</div>
+<!--gotop-->
+<div data-am-widget="gotop" class="am-gotop am-gotop-fixed">
+    <a href="#top" title="">
+        <i class="am-gotop-icon am-icon-arrow-up"></i>
+    </a>
+</div>
+<!-- 尾部 -->
+<footer th:replace="ui/include/footer :: footer"></footer>
+<script>
+    var messages = $("#messages").val();
+    if (messages!==""){
+        alert(messages);
+    }
+</script>
+</body>
+</html>

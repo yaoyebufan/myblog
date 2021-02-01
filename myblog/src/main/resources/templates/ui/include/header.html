@@ -1,0 +1,40 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<header th:fragment="header" class="am-topbar am-topbar-fixed-top">
+    <h1 class="am-topbar-brand">
+        <a href="/">sunyue</a>
+    </h1>
+
+    <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
+            data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span
+            class="am-icon-bars"></span></button>
+
+    <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
+        <ul class="am-nav am-nav-pills am-topbar-nav">
+            <li><a href="/"><i class="am-icon-home"></i> 首页</a></li>
+            <li><a href="/sort"><i class="am-icon-th"></i> 分类</a></li>
+            <li><a href="/label"><i class="am-icon-tags"></i> 标签</a></li>
+            <li><a href="/archive"><i class="am-icon-suitcase"></i> 归档</a></li>
+            <li><a href="/message"><i class="am-icon-commenting"></i> 留言</a></li>
+            <li><a href="/about"><i class="am-icon-user"></i> 关于我</a></li>
+        </ul>
+
+        <form class="am-topbar-form am-topbar-left am-form-inline " role="search" action="/search" method="get">
+            <div class="am-form-group">
+                <input type="text" name="articleTitle" class="am-form-field am-input-sm am-radius" placeholder="搜索文章">
+            </div>
+            <button type="submit" class="am-btn am-btn-primary am-btn-sm am-radius"><i class="am-icon-search"></i> 搜索
+            </button>
+        </form>
+        <div th:if="${session.user==null}">
+            <a href="/register" class="am-topbar-btn am-btn am-btn-default am-round am-topbar-right">注册</a>
+            <a href="/login" class="am-topbar-btn am-btn am-btn-default am-round am-topbar-right">登陆</a>
+        </div>
+        <div th:if="${session.user!=null}">
+            <span style="float: right;padding-top: 10px;font-size: 16px" class="am-sans-serif">
+                欢迎你，<a href="#">[[${session.user.userName}]]</a>
+                <a style="margin-left: 10px;margin-right: 10px;font-size: 10px;" href="/out">退出登录</a>
+            </span>
+        </div>
+    </div>
+</header>

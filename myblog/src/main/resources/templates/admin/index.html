@@ -1,0 +1,50 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>博客管理</title>
+    <meta name="description" content="这是一个blog页面">
+    <meta name="keywords" content="index">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" th:href="@{/admin_assets/i/favicon.png}">
+    <link rel="apple-touch-icon-precomposed" th:href="@{/admin_assets/i/app-icon72x72@2x.png}">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <script th:src="@{/admin_assets/js/echarts.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/admin_assets/css/amazeui.min.css}"/>
+    <link rel="stylesheet" th:href="@{/admin_assets/css/amazeui.datatables.min.css}"/>
+    <link rel="stylesheet" th:href="@{/admin_assets/css/app.css}">
+    <script th:src="@{/admin_assets/js/jquery.min.js}"></script>
+</head>
+
+<body data-type="index">
+<script th:src="@{/admin_assets/js/theme.js}"></script>
+<div class="am-g tpl-g">
+    <!-- 头部 -->
+    <header th:replace="admin/include/header :: header"></header>
+    <!-- 风格切换 -->
+    <div th:replace="admin/include/tpl-skiner :: tpl-skiner"></div>
+    <!-- 侧边导航栏 -->
+    <div th:replace="admin/include/left :: left"></div>
+    <!-- 内容区域 id="tpl-echarts"-->
+    <div class="tpl-content-wrapper">
+        <div class="row-content am-cf">
+            <div class="row am-cf">
+                <!--为了让折叠按钮生效-->
+                <div id="tpl-echarts"></div>
+
+                <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 widget-margin-bottom-lg">
+                    <div class="widget am-cf widget-body-lg">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:replace="admin/include/foot :: footer"></footer>
+</body>
+
+</html>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sunyue.myblog.dao.ArticlesMapper">
+  <resultMap id="BaseResultMap" type="com.sunyue.myblog.entity.Articles">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="article_id" jdbcType="BIGINT" property="articleId" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="article_resource" jdbcType="VARCHAR" property="articleResource" />
+    <result column="article_views" jdbcType="BIGINT" property="articleViews" />
+    <result column="article_likes" jdbcType="BIGINT" property="articleLikes" />
+    <result column="article_comments" jdbcType="BIGINT" property="articleComments" />
+    <result column="article_create_time" jdbcType="TIMESTAMP" property="articleCreateTime" />
+    <result column="article_update_time" jdbcType="TIMESTAMP" property="articleUpdateTime" />
+    <result column="article_status" jdbcType="INTEGER" property="articleStatus" />
+    <result column="article_title" jdbcType="LONGVARCHAR" property="articleTitle" />
+    <result column="article_content_md" jdbcType="LONGVARCHAR" property="articleContentMd" />
+    <result column="article_content" jdbcType="LONGVARCHAR" property="articleContent" />
+  </resultMap>
+</mapper>

@@ -1,0 +1,106 @@
+.con {
+    padding-top: 6%;
+    /*       border-style: dashed;
+           border-image-width: 1px;
+           border-bottom-color: #0a628f;*/
+}
+
+.login {
+    margin: 0 auto;
+    width: 60%;
+    border: 1px solid #ffa188;
+    border-radius: 5px;
+/*    border-radius: 5px;
+    box-shadow: 1px 1px 6px #000 inset;
+    background-color: rgba(71, 53, 53, 0.64);*/
+}
+
+h2 {
+    padding-top: 15%;
+    text-align: center;
+    color: #f26e6b;
+}
+
+.email, .pws {
+    color: black;
+    font-size: small;
+    border: 1px #6c1db1 solid;
+    border-radius: 10px;
+    background: transparent;
+    outline: medium;
+    margin-left: 25%;
+    margin-top: 6%;
+    padding-left: 6px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    width: 50%;
+    caret-color: red;
+}
+
+.denglu {
+    padding: 2% 4%;
+    color: #69749e;
+    background-color: rgba(63, 123, 228, 0.69);
+    font-size: 5px;
+    border: 1px solid transparent;
+    outline: none;
+    border-radius: 12px;
+    margin-top: 10%;
+    margin-left: 25%;
+    margin-bottom: 15%;
+}
+
+.zhuce {
+    float: right;
+    padding: 2% 4%;
+    color: #f5a1d7;
+    background-color: #6f96ac;
+    font-size: 5px;
+    border: 1px solid transparent;
+    outline: none;
+    border-radius: 12px;
+    margin-top: 10%;
+    margin-right: 25%;
+    margin-bottom: 15%;
+}
+
+/*    .wjmm{
+       !* float: left;*!
+        font-size: xx-small;
+        color: #ea1328;
+        padding-left: 10px;
+        margin-bottom: 5px;
+    }*/
+*:focus {
+    outline: none;
+    background-color: transparent;
+}
+
+::selection {
+    background: transparent;
+}
+
+::-moz-selection {
+    background: transparent;
+}
+
+/*修改提示文字的颜色*/
+input::-webkit-input-placeholder { /* WebKit browsers */
+    color: #ff0927;
+}
+
+input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: #ff0927;
+}
+
+input::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: #ff0927;
+}
+
+input:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color: #ff0927;
+}
+.blog-footer {
+    padding-top: 50px;
+    text-align: center;
+}

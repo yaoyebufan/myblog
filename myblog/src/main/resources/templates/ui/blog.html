@@ -1,0 +1,218 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>孙跃的博客</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="alternate icon" type="image/png" th:href="@{/assets/i/favicon.png}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/amazeui.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/blog.css}">
+    <!--[if lt IE 9]>
+    <script th:src="@{http://libs.baidu.com/jquery/1.11.1/jquery.min.js}"></script>
+    <script th:src="@{http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js}"></script>
+    <script th:src="@{/assets/js/amazeui.ie8polyfill.min.js}"></script>
+    <![endif]-->
+
+    <!--[if (gte IE 9)|!(IE)]><!-->
+    <script th:src="@{/assets/js/jquery.min.js}"></script>
+    <!--<![endif]-->
+    <script th:src="@{/assets/js/amazeui.min.js}"></script>
+    <script th:src="@{/assets/js/app.js}"></script>
+    <!--右下角动漫人物-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+</head>
+<body>
+<!-- 头部 -->
+<header th:replace="ui/include/header :: header"></header>
+<div class="am-g am-g-fixed blog-g-fixed ">
+    <div class="am-u-md-8">
+        <ul class="menu-list">
+            <li>
+                <ul class="list">
+                    <li class="one"><i class="am-icon-volume-up" style="margin-left: 10px;color: #fbd602"></i>
+                        我曾在极度愤怒的情况完成一个博客网站
+                    </li>
+                    <li class="two"><i class="am-icon-volume-up" style="margin-left: 10px;color: #fbd602"></i>
+                        人的体质不能一概而论，世人皆凡人
+                    </li>
+                    <li class="three"><i class="am-icon-volume-up" style="margin-left: 10px;color: #fbd602"></i>
+                        我一直相信等你出現我就知道是你
+                    </li>
+                    <li class="four"><i class="am-icon-volume-up" style="margin-left: 10px;color: #fbd602"></i>
+                        长才靡入用，大厦失巨楹
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div th:each="article : ${page.getList()}">
+            <article class="blog-main">
+                <h3 class="am-article-title blog-title">
+                    <a th:href="@{'/article?articleId='+${article.articleId}}">[[${article.articleTitle}]]</a>
+                </h3>
+                <h4 class="am-article-meta blog-meta">
+                    <span class="badge"> 原创 </span>
+                    <span th:each="admin : ${adminsList}">
+                        <span class="user" th:if="${admin.adminId==article.userId}"><i class="am-icon-user"></i> [[${admin.adminName}]]</span>
+                    </span>
+                    <!--<span class="user"><i class="am-icon-user"></i>sunyue</span>-->
+                    <span class="time"><i class="am-icon-calendar"> </i>
+                        <span th:text="${#dates.format(article.articleCreateTime, 'yyyy-MM-dd')}"></span>
+                    </span>
+                </h4>
+                <div class="blog-content">
+                    <!--将文章内容展示-->
+                    <div th:utext="${article.articleContent}"></div>
+                </div>
+                <a class="read" th:href="@{'/article?articleId='+${article.articleId}}">阅读全文>></a>
+
+            </article>
+            <!--文章分割区域-->
+            <hr class="am-article-divider blog-hr">
+        </div>
+        <div th:style="'display:' + @{(${page.getList()==null} ? 'none')} + ''" class="am-u-lg-12">
+            <ul class="am-pagination am-pagination-centered">
+                <li th:if="${page.pageNum!=1}">
+                    <a th:href="@{'/?pageNum=' + 1}">首页</a>
+                </li>
+                <li th:if="${page.hasPreviousPage==true}">
+                    <a th:href="@{'/?pageNum='+${page.pageNum-1}}">«</a>
+                </li>
+                <!--<li th:if="${page.pageNum==page.pages}"><span>...</span></li>-->
+                <li th:each="i : ${index}" th:class="${page.pageNum==i}? 'am-active'">
+                    <a th:text="${i}" th:href="@{'/?pageNum='+${i}}"></a>
+                </li>
+                <!--  <li th:if="${page.hasNextPage==true}"><span>...</span></li>
+                  <li th:if="${page.pageNum!=page.pages}">
+                      <a th:text="${page.pages}" th:href="@{'/?pageNum='+${page.pages}}"></a>
+                  </li>-->
+                <li th:if="${page.hasNextPage==true}">
+                    <a th:href="@{'/?pageNum='+${page.pageNum+1}}">»</a>
+                </li>
+                <li th:if="${page.pageNum!=page.pages}">
+                    <a th:href="@{'/?pageNum='+${page.pages}}">末页</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="am-u-md-4 blog-sidebar">
+        <div class="am-panel-group">
+            <section class="am-panel1">
+                <div class="am-panel-hd about">寄语</div>
+                <hr data-am-widget="divider" class="am-divider am-divider-dotted"/>
+                <div class="am-panel-bd">
+                    <p class="am-kai message1">
+                        一个人总要走陌生的路，看陌生的风景，听陌生的歌，然后在某个不经意的瞬间，你会发现，原本是费尽心机想要忘记的事情真的就那么忘记了。幸福，不是长生不老，不是大鱼大肉，不是权倾朝野。幸福是每一个微小的生活愿望达成。当你想吃的时候有得吃，想被爱的时候有人来爱你。</p>
+                    <p class="am-lg-text-right am-serif">--- sunyue</p>
+                </div>
+            </section>
+
+            <section class="am-panel2">
+                <div class="am-panel-hd about">最新文章</div>
+                <hr data-am-widget="divider" class="am-divider am-divider-dotted"/>
+                <div class="am-panel-bd">
+                    <div th:each="article : ${articles}">
+                        <li><a th:href="@{'/article?articleId='+${article.articleId}}">[[${article.articleTitle}]]</a>
+                        </li>
+                    </div>
+                    <li class="more1"><a href="/search">查看更多>></a></li>
+                </div>
+            </section>
+
+
+            <section class="am-panel3">
+                <div class="am-panel-hd about">最新留言</div>
+                <hr data-am-widget="divider" class="am-divider am-divider-dotted"/>
+                <div class="am-panel-bd">
+                    <div th:each="message : ${messages}">
+                        <div class="am-g">
+
+                            <div class="am-u-sm-6 liuyan"><a href="/message">
+                                <span th:each="user : ${usersList}">
+                                    <span class="user"
+                                          th:if="${user.userId==message.userId}">[[${user.userName}]]：</span>
+                                </span>
+                                <span>[[${message.messageContent}]]</span></a></div>
+                            <div class="am-u-sm-6 time"><span
+                                    th:text="${#dates.format(message.messageCreateTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <li class="more2"><a href="/message">查看更多>></a></li>
+
+                </div>
+            </section>
+
+            <section class="am-panel4">
+                <div class="am-panel-hd about">标签云</div>
+                <hr data-am-widget="divider" class="am-divider am-divider-dotted"/>
+                <div class="am-panel-bd">
+                    <ul class="cloud">
+                        <li th:each="label : ${allLabel}"><a th:href="@{'/label_con?labelName='+${label.labelName}}">[[${label.labelName}]]</a>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <div data-am-widget="gotop" class="am-gotop am-gotop-fixed">
+                <a href="#top" title="">
+                    <i class="am-gotop-icon am-icon-arrow-up"></i>
+                </a>
+            </div>
+
+            <div class="person">
+                <a href="" data-am-offcanvas="{target: '#doc-oc-demo2', effect: 'push'}">
+                    <i class="am-secondary am-icon-server am-icon-sm"></i>
+                </a>
+            </div>
+
+            <!-- 侧边栏内容 -->
+            <div id="doc-oc-demo2" class="am-offcanvas">
+                <div class="am-offcanvas-bar">
+                    <div class="am-offcanvas-content">
+                        <h1 class="am-kai">个人微信</h1>
+                        <hr data-am-widget="divider" style="" class="am-divider am-divider-dashed"/>
+                        <img th:src="@{/assets/img/weixin.png}" alt="weixin">
+                        <p class="am-kai name">孙 跃</p>
+                        <p style="text-align: center">专注于各类语言开发和探索</p>
+                        <p style="text-align: center">以及积累更多新的东西</p>
+
+                        <div class="am-g tg">
+                            <div class="am-u-sm-4 a1">
+                                <li class="li1">文章</li>
+                                <li class="li2">[[${articleCount}]]</li>
+                            </div>
+                            <div class="am-u-sm-4 a2">
+                                <li class="li1">留言</li>
+                                <li class="li2">[[${messageCount}]]</li>
+                            </div>
+                            <div class="am-u-sm-4 a3">
+                                <li class="li1">标签</li>
+                                <li class="li2">[[${labelCount}]]</li>
+                            </div>
+                        </div>
+
+                        <div class="lianxi">
+                            <i class="am-icon-qq"> 873777654</i>
+                            <i class="am-icon-weixin" style="margin-left: 5px"> 17713430236</i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- 尾部 -->
+<footer th:replace="ui/include/footer :: footer"></footer>
+<script language="javascript" type="text/javascript">
+
+</script>
+</body>
+</html>

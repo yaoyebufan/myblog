@@ -1,0 +1,520 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>[[${article.articleTitle}]]</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="alternate icon" type="image/png" th:href="@{/assets/i/favicon.png}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/amazeui.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/blog.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/article.css}">
+    <!--开启代码高亮-->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/dark.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+    <!--[if lt IE 9]>
+    <script th:src="@{http://libs.baidu.com/jquery/1.11.1/jquery.min.js}"></script>
+    <script th:src="@{http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js}"></script>
+    <script th:src="@{/assets/js/amazeui.ie8polyfill.min.js}"></script>
+    <![endif]-->
+
+    <!--[if (gte IE 9)|!(IE)]><!-->
+    <script th:src="@{/assets/js/jquery.min.js}"></script>
+    <!--<![endif]-->
+    <script th:src="@{/assets/js/amazeui.min.js}"></script>
+    <script th:src="@{/assets/js/app.js}"></script>
+    <!--右下角动漫人物-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget/autoload.js"></script>
+    <!--<style type="text/css">
+        /*
+Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-license.org/
+*/
+        .hljs-ln-numbers {
+            text-align: center;
+            color: #ccc;
+            border-right: 1px solid #999;
+            vertical-align: top;
+            margin-left: 5px;
+            padding-left: 5px;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+       code {
+           /*实现左右滑动块*/
+            white-space: pre !important;
+            overflow-x: scroll !important;
+            word-break: keep-all !important;
+            word-wrap: initial !important;
+        }
+        .cnblogs-markdown .hljs {
+            font-size: 16px!important;
+            font-family: consolas,monospace !important;
+            display: block;
+            overflow-x: auto;
+            padding: 0.5em;
+            background: #23241f !important;
+            color: #FFF;
+            white-space: pre;
+            word-break: normal;
+            padding: 10px 15px !important;
+        }
+
+        .hljs,
+        .hljs-tag,
+        .hljs-subst {
+            color: #f8f8f2;
+        }
+
+        .hljs-strong,
+        .hljs-emphasis {
+            color: #a8a8a2;
+        }
+
+        .hljs-bullet,
+        .hljs-quote,
+        .hljs-number,
+        .hljs-regexp,
+        .hljs-literal,
+        .hljs-link {
+            color: #ae81ff;
+        }
+
+        .hljs-code,
+        .hljs-title,
+        .hljs-section,
+        .hljs-selector-class {
+            color: #a6e22e;
+        }
+
+        .hljs-strong {
+            font-weight: bold;
+        }
+
+        .hljs-emphasis {
+            font-style: italic;
+        }
+
+        .hljs-keyword,
+        .hljs-selector-tag,
+        .hljs-name,
+        .hljs-attr {
+            color: #f92672;
+        }
+
+        .hljs-symbol,
+        .hljs-attribute {
+            color: #66d9ef;
+        }
+
+        .hljs-params,
+        .hljs-class .hljs-title {
+            color: #f8f8f2;
+        }
+
+        .hljs-string,
+        .hljs-type,
+        .hljs-built_in,
+        .hljs-builtin-name,
+        .hljs-selector-id,
+        .hljs-selector-attr,
+        .hljs-selector-pseudo,
+        .hljs-addition,
+        .hljs-variable,
+        .hljs-template-variable {
+            color: #e6db74;
+        }
+
+        .hljs-comment,
+        .hljs-deletion,
+        .hljs-meta {
+            color: #75715e;
+        }
+    </style>-->
+    <style type="text/css">
+        /*
+Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-license.org/
+*/
+        .hljs-ln-numbers {
+            text-align: center;
+            color: #ccc;
+            border-right: 1px solid #999;
+            vertical-align: top;
+            margin-left: 5px;
+            padding-left: 5px;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        /*去掉边框*/
+        pre{
+            border:none;
+        }
+        code {
+            /*实现左右滑动块*/
+            white-space: pre !important;
+            overflow-x: scroll !important;
+            word-break: keep-all !important;
+            word-wrap: initial !important;
+        }
+        .cnblogs-markdown .hljs {
+            font-size: 16px!important;
+            font-family: consolas,monospace !important;
+            display: block;
+            overflow-x: auto;
+            padding: 0.5em;
+            background: #23241f !important;
+            color: #FFF;
+            white-space: pre;
+            word-break: normal;
+            padding: 10px 15px !important;
+        }
+
+        .hljs,
+        .hljs-tag,
+        .hljs-subst {
+            color: #f8f8f2;
+        }
+
+        .hljs-strong,
+        .hljs-emphasis {
+            color: #a8a8a2;
+        }
+
+        .hljs-bullet,
+        .hljs-quote,
+        .hljs-number,
+        .hljs-regexp,
+        .hljs-literal,
+        .hljs-link {
+            color: #ae81ff;
+        }
+
+        .hljs-code,
+        .hljs-title,
+        .hljs-section,
+        .hljs-selector-class {
+            color: #a6e22e;
+        }
+
+        .hljs-strong {
+            font-weight: bold;
+        }
+
+        .hljs-emphasis {
+            font-style: italic;
+        }
+
+        .hljs-keyword,
+        .hljs-selector-tag,
+        .hljs-name,
+        .hljs-attr {
+            color: #f92672;
+        }
+
+        .hljs-symbol,
+        .hljs-attribute {
+            color: #66d9ef;
+        }
+
+        .hljs-params,
+        .hljs-class .hljs-title {
+            color: #f8f8f2;
+        }
+
+        .hljs-string,
+        .hljs-type,
+        .hljs-built_in,
+        .hljs-builtin-name,
+        .hljs-selector-id,
+        .hljs-selector-attr,
+        .hljs-selector-pseudo,
+        .hljs-addition,
+        .hljs-variable,
+        .hljs-template-variable {
+            color: #e6db74;
+        }
+
+        .hljs-comment,
+        .hljs-deletion,
+        .hljs-meta {
+            color: #75715e;
+        }
+
+        .hljs-keyword,
+        .hljs-selector-tag,
+        .hljs-built_in,
+        .hljs-name,
+        .hljs-tag {
+
+            color: #569CD6;
+
+        }
+
+        .hljs-string,
+        .hljs-type,
+        .hljs-built_in,
+        .hljs-builtin-name,
+        .hljs-selector-id,
+        .hljs-selector-attr,
+        .hljs-selector-pseudo,
+        .hljs-addition,
+        .hljs-variable,
+        .hljs-template-variable {
+
+            color: #CE9178;
+
+        }
+
+
+
+        .hljs-comment,
+        .hljs-deletion,
+        .hljs-meta {
+
+            color: #6A9955;
+
+        }
+
+        .hljs-bullet,
+        .hljs-quote,
+        .hljs-number,
+        .hljs-regexp,
+        .hljs-literal,
+        .hljs-link {
+
+            color: #B5CEA8;
+
+        }
+
+        .hljs-code,
+        .hljs-title,
+        .hljs-section,
+        .hljs-selector-class {
+
+            color: #DCDCAA;
+
+        }
+    </style>
+    <!--   <style>
+         .hljs-ln-numbers {
+             text-align: center;
+             color: #ccc;
+             border-right: 1px solid #999;
+             vertical-align: top;
+             margin-left: 5px;
+             padding-left: 5px;
+             -webkit-touch-callout: none;
+             -webkit-user-select: none;
+             -khtml-user-select: none;
+             -moz-user-select: none;
+             -ms-user-select: none;
+             user-select: none;
+         }
+         code {
+             /*实现左右滑动块*/
+             white-space: pre !important;
+             overflow-x: scroll !important;
+             word-break: keep-all !important;
+             word-wrap: initial !important;
+         }
+         .hljs-keyword,
+         .hljs-selector-tag,
+         .hljs-built_in,
+         .hljs-name,
+         .hljs-tag {
+
+             color: #569CD6;
+
+         }
+
+         .hljs-string,
+         .hljs-type,
+         .hljs-built_in,
+         .hljs-builtin-name,
+         .hljs-selector-id,
+         .hljs-selector-attr,
+         .hljs-selector-pseudo,
+         .hljs-addition,
+         .hljs-variable,
+         .hljs-template-variable {
+
+             color: #CE9178;
+
+         }
+
+
+
+         .hljs-comment,
+         .hljs-deletion,
+         .hljs-meta {
+
+             color: #6A9955;
+
+         }
+
+         .hljs-bullet,
+         .hljs-quote,
+         .hljs-number,
+         .hljs-regexp,
+         .hljs-literal,
+         .hljs-link {
+
+             color: #B5CEA8;
+
+         }
+
+         .hljs-code,
+         .hljs-title,
+         .hljs-section,
+         .hljs-selector-class {
+
+             color: #DCDCAA;
+
+         }
+
+         .hljs-keyword,
+         .hljs-selector-tag,
+         .hljs-built_in,
+         .hljs-name,
+         .hljs-tag {
+
+             color: #569CD6;
+
+         }
+
+         .hljs-attr {
+
+             color: #9CDCFE;
+
+         }
+         .cnblogs-markdown .hljs
+         {
+             background: #1E1E1E !important;
+             background-image: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%);
+         }
+     </style>-->
+</head>
+<body>
+
+<!-- 头部 -->
+<header th:replace="ui/include/header :: header"></header>
+<div class="am-container">
+    <div class="am-article-hd">
+        <h1 class="am-article-title am-article-title1">[[${article.articleTitle}]]</h1>
+    </div>
+    <div class="am-article-meta am-article-meta1">
+        <span class="badge"> 原创 </span>
+        <span class="user"><i class="am-icon-user"></i>[[${admin.adminName}]]</span>
+        <span class="time"><i class="am-icon-calendar"> </i>
+            <span th:text="${#dates.format(article.articleCreateTime, 'yyyy-MM-dd')}"></span>
+        </span>
+
+    </div>
+    <div class="am-article-bd am-article-bd1">
+        <!--将文章内容展示-->
+        <div th:utext="${article.articleContent}"></div>
+        <div id="wordsView">
+            <textarea style="display:none;" name="editormd-markdown-doc" id="mdText"></textarea>
+        </div>
+    </div>
+    <!--  <div class="like">
+          <a href="#"><i class="am-icon-thumbs-up am-icon-sm"> 点赞 | 33</i></a>
+      </div>-->
+    <div class="am-article-foot">
+        <li><span>本文作者：</span>
+            <small>[[${admin.adminName}]]</small>
+        </li>
+        <li><span>原文链接：</span>
+            <a th:if="${article.articleResource==null||article.articleResource==''}" href="">[[${#httpServletRequest.getRequestURL() +'?'+ #httpServletRequest.getQueryString()}]]</a>
+            <a th:if="article.articleResource!=''" th:href="${article.articleResource}">[[${article.articleResource}]]</a>
+        </li>
+        <li><span>版权声明： </span>
+            <small>本博客所有文章除特别声明外，转载请署名作者且注明文章出处。</small>
+        </li>
+    </div>
+
+    <div class="article-comment" th:if="${session.user==null}">
+        <span>
+            <a href="/login">登录</a>后才可以发表评论呦...
+        </span>
+    </div>
+    <input id="messages" type="hidden" th:value="${messages}"  />
+    <form action="/discuss" method="post" th:if="${session.user!=null}">
+        <input type="text" style="display: none" th:value="${article.articleId}" name="articleId"/>
+        <input type="text" name="com" class="article-comment1"/>
+        <input type="submit" class="article-comment-submit am-align-right am-btn am-btn-success am-round" value="发表评论"/>
+    </form>
+    <!--gotop-->
+    <div data-am-widget="gotop" class="am-gotop am-gotop-fixed">
+        <a href="#top" title="">
+            <i class="am-gotop-icon am-icon-arrow-up"></i>
+        </a>
+    </div>
+    <div class="comment-list">
+        <ul class="am-comments-list am-comments-list-flip" th:each="comment,loopStatus : ${commentsList}">
+            <li th:if="${loopStatus.odd==true&&comment.articleId==article.articleId}" class="am-comment am-comment-primary"><a href="#link-to-user-home"><img
+                    th:each="user : ${usersList}" th:if="${user.userId==comment.userId}"
+                    th:src="${user.userPhoto}" alt=""
+                    class="am-comment-avatar" width="48" height="48"></a>
+                <div class="am-comment-main">
+                    <header class="am-comment-hd">
+                        <div class="am-comment-meta"><a th:each="user : ${usersList}"
+                                                        th:if="${user.userId==comment.userId}" href="#link-to-user"
+                                                        class="am-comment-author">[[${user.userName}]]</a> 评论于
+                            <time datetime="2013-07-27T04:54:29-07:00" title="2013年7月27日 下午7:54 格林尼治标准时间+0800"
+                                  th:text="${#dates.format(comment.commentCreateTime, 'yyyy-MM-dd')}">
+                            </time>
+                        </div>
+                    </header>
+                    <div class="am-comment-bd"><p>[[${comment.commentContent}]]</p></div>
+                </div>
+            </li>
+            <li th:if="${loopStatus.even==true&&comment.articleId==article.articleId}" class="am-comment am-comment-flip am-comment-secondary"><a href="#link-to-user-home"><img
+                    th:each="user : ${usersList}" th:if="${user.userId==comment.userId}"
+                    th:src="${user.userPhoto}" alt=""
+                    class="am-comment-avatar" width="48" height="48"></a>
+                <div class="am-comment-main">
+                    <header class="am-comment-hd">
+                        <div class="am-comment-meta"><a th:each="user : ${usersList}"
+                                                        th:if="${user.userId==comment.userId}" href="#link-to-user"
+                                                        class="am-comment-author">[[${user.userName}]]</a> 评论于
+                            <time datetime="2013-07-27T04:54:29-07:00" title="2013年7月27日 下午7:54 格林尼治标准时间+0800"
+                                  th:text="${#dates.format(comment.commentCreateTime, 'yyyy-MM-dd')}">
+
+                            </time>
+                        </div>
+                    </header>
+                    <div class="am-comment-bd"><p>[[${comment.commentContent}]]</p></div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- 尾部 -->
+<footer th:replace="ui/include/footer :: footer"></footer>
+
+<script>
+    var messages = $("#messages").val();
+    if (messages!==""){
+        alert(messages);
+    }
+    // 开启代码高亮
+    hljs.initHighlightingOnLoad();
+    // 行号显示
+    hljs.initLineNumbersOnLoad({singleLine: true});
+</script>
+</body>
+</html>

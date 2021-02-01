@@ -1,0 +1,38 @@
+/*.message_com{
+    width: 100%;
+    border:0;
+    outline:medium;
+}*/
+
+.tishi{
+    font-size: 16px;
+    padding-top: 30px;
+}
+.message{
+    width: 100%;
+    margin-top: 30px;
+    border-radius: 10px;
+    height: 150px;
+    font-size: 20px;
+    border: 1px solid rgba(4, 48, 215, 0.38);
+    padding-left: 30px;
+    padding-top: 20px;
+    padding-bottom: 80px;
+}
+.message-submit{
+    margin-top: 10px;
+    /*去除按钮外边框*/
+    outline:0 none !important; blr:expression(this.onFocus=this.blur());
+}
+/*留言列表*/
+.comment-list{
+    margin-top: 60px;
+}
+/*页脚*/
+.blog-footer {
+    padding: 10px 0;
+    text-align: center;
+}
+.message-list{
+    margin-top: 60px
+}

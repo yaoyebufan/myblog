@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sunyue.myblog.dao.MessagesMapper">
+  <resultMap id="BaseResultMap" type="com.sunyue.myblog.entity.Messages">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="message_id" jdbcType="BIGINT" property="messageId" />
+    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="message_create_time" jdbcType="TIMESTAMP" property="messageCreateTime" />
+    <result column="message_status" jdbcType="INTEGER" property="messageStatus" />
+    <result column="message_content" jdbcType="LONGVARCHAR" property="messageContent" />
+  </resultMap>
+</mapper>
