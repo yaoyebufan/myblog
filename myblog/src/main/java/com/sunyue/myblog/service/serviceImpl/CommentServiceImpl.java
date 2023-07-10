@@ -32,7 +32,6 @@ public class CommentServiceImpl implements CommentService {
             return BaseResult.fail("评论信息为空！");
         }
         comment.setCommentCreateTime(new Date());
-        ;
         comment.setParentId(null);
         commentsMapper.insert(comment);
         return BaseResult.success("发表评论成功！");
